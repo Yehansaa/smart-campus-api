@@ -18,7 +18,9 @@ public class SensorResource {
                 .getSensorIds()
                 .add(sensor.getId());
 
-        return Response.status(Response.Status.CREATED).entity(sensor).build();
+        return Response.status(Response.Status.CREATED)
+                .entity(sensor)
+                .build();
     }
 
     @GET
@@ -32,5 +34,11 @@ public class SensorResource {
                 .stream()
                 .filter(s -> s.getType().equalsIgnoreCase(type))
                 .toList();
+    }
+
+    // Sub-resource locator
+    @Path("/{sensorId}/readings")
+    public SensorReadingResource getSensorReadingResource(@PathParam("sensorId") String sensorId) {
+        return new SensorReadingResource(sensorId);
     }
 }
