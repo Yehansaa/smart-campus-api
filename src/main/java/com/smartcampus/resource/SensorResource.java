@@ -6,10 +6,8 @@ public class SensorResource {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createSensor(Sensor sensor) {
 
-        if (!DataStore.rooms.containsKey(sensor.getRoomId())) {
-            return Response.status(422)
-                    .entity(Map.of("error", "Room does not exist"))
-                    .build();
+        if (sensor.getRoomId() == null || !DataStore.rooms.containsKey(sensor.getRoomId())) {
+            throw new LinkedResourceNotFoundException("Room does not exist");
         }
 
         DataStore.sensors.put(sensor.getId(), sensor);
@@ -20,6 +18,7 @@ public class SensorResource {
 
         return Response.status(Response.Status.CREATED)
                 .entity(sensor)
+                .header("Location", "/api/v1/sensors/" + sensor.getId())
                 .build();
     }
 

@@ -1,3 +1,14 @@
+package com.smartcampus.resource;
+
+import com.smartcampus.model.Sensor;
+import com.smartcampus.model.SensorReading;
+import com.smartcampus.repository.DataStore;
+
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import java.util.*;
+
 @Produces(MediaType.APPLICATION_JSON)
 public class SensorReadingResource {
 
@@ -17,10 +28,14 @@ public class SensorReadingResource {
     public Response addReading(SensorReading reading) {
 
         // Check sensor exists
-        if (!DataStore.sensors.containsKey(sensorId)) {
-            return Response.status(404)
-                    .entity(Map.of("error", "Sensor not found"))
-                    .build();
+        Sensor sensor = DataStore.sensors.get(sensorId);
+        if (sensor == null) {
+            throw new NotFoundException("Sensor not found");
+        }
+
+        // Check maintenance state
+        if ("MAINTENANCE".equalsIgnoreCase(sensor.getStatus())) {
+            throw new SensorUnavailableException("Sensor is under maintenance");
         }
 
         // Add reading
@@ -28,8 +43,7 @@ public class SensorReadingResource {
                 .computeIfAbsent(sensorId, k -> new ArrayList<>())
                 .add(reading);
 
-        // update sensor current value
-        Sensor sensor = DataStore.sensors.get(sensorId);
+        // Update current value
         sensor.setCurrentValue(reading.getValue());
 
         return Response.status(Response.Status.CREATED)

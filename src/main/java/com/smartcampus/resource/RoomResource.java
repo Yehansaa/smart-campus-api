@@ -24,9 +24,7 @@ public class RoomResource {
         Room room = DataStore.rooms.get(id);
 
         if (room == null) {
-            return Response.status(404)
-                    .entity(Map.of("error", "Room not found"))
-                    .build();
+            throw new NotFoundException("Room not found");
         }
 
         return Response.ok(room).build();
@@ -38,15 +36,11 @@ public class RoomResource {
         Room room = DataStore.rooms.get(id);
 
         if (room == null) {
-            return Response.status(404)
-                    .entity(Map.of("error", "Room not found"))
-                    .build();
+            throw new NotFoundException("Room not found");
         }
 
         if (room.getSensorIds() != null && !room.getSensorIds().isEmpty()) {
-            return Response.status(409)
-                    .entity(Map.of("error", "Room has active sensors"))
-                    .build();
+            throw new RoomNotEmptyException("Room has active sensors");
         }
 
         DataStore.rooms.remove(id);
