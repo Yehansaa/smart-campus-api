@@ -1,6 +1,12 @@
-@Path("/")
-@Produces(MediaType.APPLICATION_JSON)
+package com.smartcampus.resource;
 
+import javax.ws.rs.*;
+import javax.ws.rs.core.*;
+import java.util.Map;
+import java.util.HashMap;
+
+@Path("")
+@Produces(MediaType.APPLICATION_JSON)
 public class DiscoveryResource {
 
     @GET

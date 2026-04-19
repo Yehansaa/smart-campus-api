@@ -1,3 +1,14 @@
+package com.smartcampus.resource;
+
+import javax.ws.rs.*;
+import javax.ws.rs.core.*;
+import java.util.Collection;
+import java.util.stream.Collectors;
+
+import com.smartcampus.model.Sensor;
+import com.smartcampus.storage.DataStore;
+import com.smartcampus.exception.LinkedResourceNotFoundException;
+
 @Path("/sensors")
 @Produces(MediaType.APPLICATION_JSON)
 public class SensorResource {
@@ -32,7 +43,7 @@ public class SensorResource {
         return DataStore.sensors.values()
                 .stream()
                 .filter(s -> s.getType().equalsIgnoreCase(type))
-                .toList();
+                .collect(Collectors.toList());
     }
 
     // Sub-resource locator

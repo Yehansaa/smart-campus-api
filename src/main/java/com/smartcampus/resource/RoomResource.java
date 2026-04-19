@@ -1,3 +1,13 @@
+package com.smartcampus.resource;
+
+import javax.ws.rs.*;
+import javax.ws.rs.core.*;
+import java.util.Collection;
+
+import com.smartcampus.model.Room;
+import com.smartcampus.storage.DataStore;
+import com.smartcampus.exception.RoomNotEmptyException;
+
 @Path("/rooms")
 @Produces(MediaType.APPLICATION_JSON)
 public class RoomResource {
@@ -10,6 +20,11 @@ public class RoomResource {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createRoom(Room room) {
+
+        if (room.getId() == null || room.getId().isEmpty()) {
+            throw new BadRequestException("Room ID is required");
+        }
+
         DataStore.rooms.put(room.getId(), room);
 
         return Response.status(Response.Status.CREATED)
