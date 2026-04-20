@@ -25,6 +25,12 @@ public class RoomResource {
             throw new BadRequestException("Room ID is required");
         }
 
+        if (DataStore.rooms.containsKey(room.getId())) {
+            return Response.status(Response.Status.CONFLICT)
+                    .entity(java.util.Map.of("error", "Room already exists"))
+                    .build();
+        }
+
         DataStore.rooms.put(room.getId(), room);
 
         return Response.status(Response.Status.CREATED)

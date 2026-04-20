@@ -9,6 +9,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.*;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 @Produces(MediaType.APPLICATION_JSON)
 public class SensorReadingResource {
@@ -38,7 +39,7 @@ public class SensorReadingResource {
         }
 
         DataStore.readings
-                .computeIfAbsent(sensorId, k -> new ArrayList<>())
+                .computeIfAbsent(sensorId, k -> new CopyOnWriteArrayList<>())
                 .add(reading);
 
         sensor.setCurrentValue(reading.getValue());
