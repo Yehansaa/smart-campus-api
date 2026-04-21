@@ -225,6 +225,7 @@ The `@Consumes(MediaType.APPLICATION_JSON)` annotation limits the endpoint to on
 In case of a mismatched reader to the given media type, the request is not passed on to the resource method. In these situations, JAX-RS will automatically send an HTTP `415 Unsupported Media Type` response.
 
 This behaviour guarantees that the API has a strict and predictable contract, avoiding ambiguity in data processing and consistency in the interpretation of request payloads.
+
 ---
 
 ### Question 6: Query Parameters vs Path Parameters for Filtering
