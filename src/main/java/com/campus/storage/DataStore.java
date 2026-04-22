@@ -1,7 +1,7 @@
-package com.smartcampus.storage;
+package com.campus.storage;
 
 import java.util.*;
-import com.smartcampus.model.*;
+import com.campus.model.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 

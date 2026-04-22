@@ -1,4 +1,4 @@
-package com.smartcampus.model;
+package com.campus.model;
 
 public class Sensor {
     private String id;

@@ -1,13 +1,13 @@
-package com.smartcampus.resource;
+package com.campus.resource;
 
-import com.smartcampus.model.Sensor;
-import com.smartcampus.model.SensorReading;
-import com.smartcampus.storage.DataStore;
-import com.smartcampus.exception.SensorUnavailableException;
+import com.campus.model.Sensor;
+import com.campus.model.SensorReading;
+import com.campus.storage.DataStore;
+import com.campus.exception.SensorUnavailableException;
 
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
+import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
 

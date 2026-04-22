@@ -1,7 +1,7 @@
-package com.smartcampus.resource;
+package com.campus.resource;
 
-import javax.ws.rs.*;
-import javax.ws.rs.core.*;
+import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.*;
 import java.util.Map;
 import java.util.HashMap;
 

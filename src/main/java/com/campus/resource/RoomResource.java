@@ -1,12 +1,12 @@
-package com.smartcampus.resource;
+package com.campus.resource;
 
-import javax.ws.rs.*;
-import javax.ws.rs.core.*;
+import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.*;
 import java.util.Collection;
 
-import com.smartcampus.model.Room;
-import com.smartcampus.storage.DataStore;
-import com.smartcampus.exception.RoomNotEmptyException;
+import com.campus.model.Room;
+import com.campus.storage.DataStore;
+import com.campus.exception.RoomNotEmptyException;
 
 @Path("/rooms")
 @Produces(MediaType.APPLICATION_JSON)

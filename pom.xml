@@ -8,60 +8,83 @@
     <groupId>com.smartcampus</groupId>
     <artifactId>smart-campus-api</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <packaging>war</packaging>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
+        <jersey.version>3.1.3</jersey.version>
     </properties>
 
     <dependencies>
 
-        <!-- JAX-RS API -->
+        <!-- Jakarta RS API -->
         <dependency>
-            <groupId>javax.ws.rs</groupId>
-            <artifactId>javax.ws.rs-api</artifactId>
-            <version>2.1.1</version>
+            <groupId>jakarta.ws.rs</groupId>
+            <artifactId>jakarta.ws.rs-api</artifactId>
+            <version>3.1.0</version>
         </dependency>
 
-        <!-- Jersey Server -->
-        <dependency>
-            <groupId>org.glassfish.jersey.core</groupId>
-            <artifactId>jersey-server</artifactId>
-            <version>2.39</version>
-        </dependency>
-
-        <!-- Grizzly HTTP -->
+        <!-- Jersey Container Servlet -->
         <dependency>
             <groupId>org.glassfish.jersey.containers</groupId>
-            <artifactId>jersey-container-grizzly2-http</artifactId>
-            <version>2.39</version>
+            <artifactId>jersey-container-servlet</artifactId>
+            <version>${jersey.version}</version>
         </dependency>
 
-        <!-- HK2 Injection -->
+        <!-- Jersey HK2 Injection -->
         <dependency>
             <groupId>org.glassfish.jersey.inject</groupId>
             <artifactId>jersey-hk2</artifactId>
-            <version>2.39</version>
+            <version>${jersey.version}</version>
         </dependency>
 
-        <!-- JSON Support -->
+        <!-- JSON Support (Jackson) -->
         <dependency>
             <groupId>org.glassfish.jersey.media</groupId>
             <artifactId>jersey-media-json-jackson</artifactId>
-            <version>2.39</version>
+            <version>${jersey.version}</version>
+        </dependency>
+
+        <!-- Servlet API (Provided by Tomcat) -->
+        <dependency>
+            <groupId>jakarta.servlet</groupId>
+            <artifactId>jakarta.servlet-api</artifactId>
+            <version>6.0.0</version>
+            <scope>provided</scope>
         </dependency>
 
     </dependencies>
 
     <build>
+        <finalName>smart-campus-api</finalName>
         <plugins>
-            <!-- Run Main class -->
+            <!-- WAR Plugin (needed since we don't have a web.xml) -->
             <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
-                <version>3.1.0</version>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>3.3.2</version>
                 <configuration>
-                    <mainClass>com.smartcampus.config.Main</mainClass>
+                    <failOnMissingWebXml>false</failOnMissingWebXml>
+                </configuration>
+            </plugin>
+            
+            <!-- Cargo Plugin to run Tomcat 10+ -->
+            <plugin>
+                <groupId>org.codehaus.cargo</groupId>
+                <artifactId>cargo-maven3-plugin</artifactId>
+                <version>1.10.7</version>
+                <configuration>
+                    <container>
+                        <containerId>tomcat10x</containerId>
+                        <type>embedded</type>
+                    </container>
+                    <configuration>
+                        <properties>
+                            <cargo.servlet.port>8080</cargo.servlet.port>
+                            <cargo.servlet.context>/</cargo.servlet.context>
+                        </properties>
+                    </configuration>
                 </configuration>
             </plugin>
         </plugins>

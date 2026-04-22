@@ -1,4 +1,4 @@
-package com.smartcampus.exception;
+package com.campus.exception;
 
 public class SensorUnavailableException extends RuntimeException {
     public SensorUnavailableException(String message) {

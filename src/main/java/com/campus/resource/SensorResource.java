@@ -1,13 +1,13 @@
-package com.smartcampus.resource;
+package com.campus.resource;
 
-import javax.ws.rs.*;
-import javax.ws.rs.core.*;
+import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.*;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
-import com.smartcampus.model.Sensor;
-import com.smartcampus.storage.DataStore;
-import com.smartcampus.exception.LinkedResourceNotFoundException;
+import com.campus.model.Sensor;
+import com.campus.storage.DataStore;
+import com.campus.exception.LinkedResourceNotFoundException;
 
 @Path("/sensors")
 @Produces(MediaType.APPLICATION_JSON)

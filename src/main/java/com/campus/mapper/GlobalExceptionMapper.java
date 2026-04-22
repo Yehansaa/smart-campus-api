@@ -1,9 +1,9 @@
-package com.smartcampus.mapper;
+package com.campus.mapper;
 
-import javax.ws.rs.ext.*;
-import javax.ws.rs.core.Response;
+import jakarta.ws.rs.ext.*;
+import jakarta.ws.rs.core.Response;
 import java.util.Map;
-import javax.ws.rs.WebApplicationException;
+import jakarta.ws.rs.WebApplicationException;
 
 @Provider
 public class GlobalExceptionMapper implements ExceptionMapper<Throwable> {

@@ -1,10 +1,10 @@
-package com.smartcampus.mapper;
+package com.campus.mapper;
 
-import javax.ws.rs.ext.*;
-import javax.ws.rs.core.Response;
+import jakarta.ws.rs.ext.*;
+import jakarta.ws.rs.core.Response;
 import java.util.Map;
 
-import com.smartcampus.exception.RoomNotEmptyException;
+import com.campus.exception.RoomNotEmptyException;
 
 @Provider
 public class RoomNotEmptyExceptionMapper implements ExceptionMapper<RoomNotEmptyException> {
