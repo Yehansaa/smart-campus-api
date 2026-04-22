@@ -78,40 +78,146 @@ This endpoint offers API metadata and navigation links, aiding with REST discove
 
 ## 4) Sample API Usage (curl)
 
-### 1. Create a room
+Use the base URL:
+
+```text
+http://localhost:8080/api/v1
+```
+
+### 1. Create a Room
 
 ```bash
 curl -X POST http://localhost:8080/api/v1/rooms \
   -H "Content-Type: application/json" \
-  -d "{\"id\":\"R101\",\"name\":\"Lab A\",\"capacity\":40}"
+  -d "{\"id\":\"ROOM-001\",\"name\":\"Engineering Lab\",\"capacity\":40}"
 ```
 
-### 2. Get all rooms
+Expected response:
 
-```bash
-curl http://localhost:8080/api/v1/rooms
+```json
+{
+  "message": "Room created successfully",
+  "roomId": "ROOM-001"
+}
 ```
 
-### 3. Create a sensor linked to a room
+### 2. Create a Sensor (linked to an existing room)
 
 ```bash
 curl -X POST http://localhost:8080/api/v1/sensors \
   -H "Content-Type: application/json" \
-  -d "{\"id\":\"S-CO2-1\",\"type\":\"CO2\",\"status\":\"ACTIVE\",\"currentValue\":0.0,\"roomId\":\"R101\"}"
+  -d "{\"id\":\"TEMP-001\",\"type\":\"TEMPERATURE\",\"status\":\"ACTIVE\",\"currentValue\":0.0,\"roomId\":\"ROOM-001\"}"
 ```
 
-### 4. Filter sensors by type
+Expected response:
 
-```bash
-curl "http://localhost:8080/api/v1/sensors?type=CO2"
+```json
+{
+  "id": "TEMP-001",
+  "message": "Sensor created successfully"
+}
 ```
 
-### 5. Add a reading to a sensor
+### 3. Get all Sensors
 
 ```bash
-curl -X POST http://localhost:8080/api/v1/sensors/S-CO2-1/readings \
+curl -X GET http://localhost:8080/api/v1/sensors
+```
+
+Expected response (example):
+
+```json
+[
+  {
+    "id": "SEN-001",
+    "type": "Temperature",
+    "status": "ACTIVE",
+    "currentValue": 30.0,
+    "roomId": "ROOM-101"
+  },
+  {
+    "id": "TEMP-001",
+    "type": "TEMPERATURE",
+    "status": "ACTIVE",
+    "currentValue": 0.0,
+    "roomId": "ROOM-001"
+  }
+]
+```
+
+### 4. Get Sensors filtered by type (optional `?type`)
+
+```bash
+curl -X GET "http://localhost:8080/api/v1/sensors?type=TEMPERATURE"
+```
+
+Expected response (example):
+
+```json
+[
+  {
+    "id": "SEN-001",
+    "type": "Temperature",
+    "status": "ACTIVE",
+    "currentValue": 30.0,
+    "roomId": "ROOM-101"
+  },
+  {
+    "id": "TEMP-001",
+    "type": "TEMPERATURE",
+    "status": "ACTIVE",
+    "currentValue": 0.0,
+    "roomId": "ROOM-001"
+  }
+]
+```
+
+### 5. Add a Reading to a Sensor
+
+```bash
+curl -X POST http://localhost:8080/api/v1/sensors/TEMP-001/readings \
   -H "Content-Type: application/json" \
-  -d "{\"id\":\"RD-1\",\"timestamp\":1713600000,\"value\":550.2}"
+  -d "{\"timestamp\":1713600000,\"value\":23.7}"
+```
+
+Expected response:
+
+```json
+{
+  "id": "a644421b-daea-4852-b1e2-14fd8846d8f8"
+}
+```
+
+### 6. Get readings for a Sensor
+
+```bash
+curl -X GET http://localhost:8080/api/v1/sensors/TEMP-001/readings
+```
+
+Expected response (example):
+
+```json
+[
+  {
+    "id": "a644421b-daea-4852-b1e2-14fd8846d8f8",
+    "timestamp": 1713600000,
+    "value": 23.7
+  }
+]
+```
+
+### 7. Delete a Sensor's Room (only after sensors are removed)
+
+```bash
+curl -X DELETE http://localhost:8080/api/v1/rooms/ROOM-001
+```
+
+Expected response (if the room still has active sensors):
+
+```json
+{
+  "error": "Room has active sensors"
+}
 ```
 
 ---

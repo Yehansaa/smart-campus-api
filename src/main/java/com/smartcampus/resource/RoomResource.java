@@ -34,7 +34,10 @@ public class RoomResource {
         DataStore.rooms.put(room.getId(), room);
 
         return Response.status(Response.Status.CREATED)
-                .entity(room)
+                .entity(java.util.Map.of(
+                        "message", "Room created successfully",
+                        "roomId", room.getId()
+                ))
                 .header("Location", "/api/v1/rooms/" + room.getId())
                 .build();
     }

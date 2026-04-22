@@ -38,6 +38,9 @@ public class SensorReadingResource {
             throw new SensorUnavailableException("Sensor is under maintenance");
         }
 
+        // Generate ID
+        reading.setId(UUID.randomUUID().toString());
+
         DataStore.readings
                 .computeIfAbsent(sensorId, k -> new CopyOnWriteArrayList<>())
                 .add(reading);
@@ -45,7 +48,7 @@ public class SensorReadingResource {
         sensor.setCurrentValue(reading.getValue());
 
         return Response.status(Response.Status.CREATED)
-                .entity(reading)
+                .entity(Collections.singletonMap("id", reading.getId()))
                 .build();
     }
 }

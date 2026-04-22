@@ -17,12 +17,10 @@ public class SensorResource {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createSensor(Sensor sensor) {
 
-        // ID validation
         if (sensor.getId() == null || sensor.getId().isEmpty()) {
             throw new BadRequestException("Sensor ID is required");
         }
 
-        // duplicate check
         if (DataStore.sensors.containsKey(sensor.getId())) {
             return Response.status(Response.Status.CONFLICT)
                     .entity(java.util.Map.of("error", "Sensor already exists"))
@@ -31,18 +29,19 @@ public class SensorResource {
 
         if (sensor.getRoomId() == null || !DataStore.rooms.containsKey(sensor.getRoomId())) {
             throw new LinkedResourceNotFoundException("Room does not exist");
-        }  
+        }
 
-        // Save sensor to data store
         DataStore.sensors.put(sensor.getId(), sensor);
 
-        // Link to room 
         DataStore.rooms.get(sensor.getRoomId())
                 .getSensorIds()
                 .add(sensor.getId());
 
         return Response.status(Response.Status.CREATED)
-                .entity(sensor)
+                .entity(java.util.Map.of(
+                        "id", sensor.getId(),
+                        "message", "Sensor created successfully"
+                ))
                 .header("Location", "/api/v1/sensors/" + sensor.getId())
                 .build();
     }
