@@ -30,9 +30,48 @@ Implementation highlights:
 - **Maven** for project build and dependency management
 - **In-memory data structures** (e.g., maps and lists) to store runtime data.
 
+## 2) Project Structure
+
+The project follows a standard Maven web application structure. Below is an overview of key files and their responsibilities:
+
+```text
+smart-campus-api/
+├── src/main/java/com/campus/
+│   ├── config/
+│   │   └── ApplicationConfig.java          # JAX-RS registration and setup
+│   ├── exception/
+│   │   ├── LinkedResourceNotFoundException.java
+│   │   ├── RoomNotEmptyException.java
+│   │   └── SensorUnavailableException.java
+│   ├── filter/
+│   │   └── LoggingFilter.java              # Request/Response logging
+│   ├── mapper/
+│   │   ├── GlobalExceptionMapper.java
+│   │   ├── LinkedResourceNotFoundExceptionMapper.java
+│   │   ├── RoomNotEmptyExceptionMapper.java
+│   │   └── SensorUnavailableExceptionMapper.java
+│   ├── model/
+│   │   ├── Room.java
+│   │   ├── Sensor.java
+│   │   └── SensorReading.java
+│   ├── resource/
+│   │   ├── DiscoveryResource.java          # Root/HATEOAS metadata
+│   │   ├── RoomResource.java               # /rooms endpoints
+│   │   ├── SensorResource.java             # /sensors endpoints
+│   │   └── SensorReadingResource.java      # Nested /readings endpoints
+│   └── storage/
+│       └── DataStore.java                  # Thread-safe in-memory storage
+├── src/main/webapp/
+│   ├── index.html                          # API Landing page
+│   └── META-INF/
+│       └── context.xml                     # Tomcat context configuration
+├── pom.xml                                 # Project dependencies (Jersey, Jackson)
+└── README.md                               # Documentation and Report
+```
+
 ---
 
-## 2) How to Run the Project
+## 3) How to Run the Project
 
 ### Requirements
 
@@ -73,7 +112,7 @@ http://localhost:8080/api/v1
 
 ---
 
-## 3) Discovery Endpoint  
+## 4) Discovery Endpoint
 
 Example response:
 
@@ -88,7 +127,7 @@ Example response:
 
 This endpoint offers API metadata and navigation links, aiding with REST discoverability.
 
-## 4) Sample API Usage (curl)
+## 5) Sample API Usage (curl)
 
 Use the base URL:
 
@@ -234,7 +273,7 @@ Expected response (if the room still has active sensors):
 
 ---
 
-## 5 ) API Design Overview
+## 6) API Design Overview
 
 ### Resource hierarchy
 
@@ -272,7 +311,7 @@ This structure keeps relationships explicit and makes traversal intuitive.
 
 ---
 
-## 6) Report - Answers to Coursework Questions
+## 7) Report - Answers to Coursework Questions
 
 ### Question 1: JAX-RS Resource Lifecycle and In-Memory State
 
@@ -407,7 +446,7 @@ Also, filters simplify the process of updating or enhancing logging in future, a
 
 ---
 
-## 7) Error Handling Design
+## 8) Error Handling Design
 
 The API implements custom exceptions to deal with various error conditions and relates them to relevant HTTP status codes. This will make sure every kind of error is well communicated to the client.
 
@@ -437,7 +476,7 @@ This organized format simplifies the processing and understanding of error respo
 
 ---
 
-## 8) Technologies Used
+## 9) Technologies Used
 
 - **Java**
 - **JAX-RS (Jersey)**
