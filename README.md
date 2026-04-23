@@ -1,6 +1,6 @@
 # Smart Campus API
 
-A RESTful Smart Campus backend implemented using **JAX-RS (Jersey)** and **Maven**.  
+A RESTful Smart Campus backend implemented using **JAX-RS (Jersey)**, **Maven**, and **Apache Tomcat**.  
 The API models three core domain entities:
 
 - **Rooms**: physical spaces in the campus (e.g., labs, classrooms)
@@ -38,18 +38,30 @@ Implementation highlights:
 
 - **Java 17+**
 - **Apache Maven 3.8+**
+- **Apache Tomcat 10+**
+- **NetBeans IDE ( version 13 or newer )**
 
-### Build
+### Build & Run (NetBeans)
 
-```bash
-mvn clean install
-```
+This project is set up to be deployed using NetBeans IDE and Apache Tomcat. No terminal commands are required to launch the API; Maven build and Tomcat deployment are automatically managed by NetBeans.
 
-### Run
+Step 1: Build the Project
 
-```bash
-mvn exec:java
-```
+1. In the Projects window on the left, right-click the smart-campus-api project folder.
+2. Select Clean and Build.
+3. Wait for the "BUILD SUCCESS" message in the Output window.
+
+Step 2: Run the Server
+
+1. Right-click the project and select Run (or click the green Play button).
+2. NetBeans will deploy the application to Apache Tomcat.
+3. Wait until you see:
+   "Smart Campus API Initialized at /api/v1"
+
+Step 3: Confirm the API is running
+
+Send a GET request using Postman:
+GET http://localhost:8080/api/v1/
 
 ### Base URL
 
@@ -430,6 +442,7 @@ This organized format simplifies the processing and understanding of error respo
 - **Java**
 - **JAX-RS (Jersey)**
 - **Maven**
+- **Apache Tomcat (Servlet Container)**
 
 ---
 
@@ -438,3 +451,4 @@ This organized format simplifies the processing and understanding of error respo
 - The system is based on in-memory storage; hence, all data is lost once the application is re-launched.
 - The design option is consistent with the coursework requirements that do not allow using external databases.
 - The API shows important REST concepts such as validation, structured error handling and logging using JAX-RS filters.
+- The application is deployed on Apache Tomcat through the NetBeans integration as a WAR file.
